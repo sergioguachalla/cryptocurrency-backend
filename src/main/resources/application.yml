@@ -3,7 +3,7 @@ server:
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/diagnostico
+    url: jdbc:postgresql://localhost:5432/crypto
     username: postgres
     password: admin
     driver-class-name: org.postgresql.Driver
@@ -12,3 +12,5 @@ spring:
     hibernate:
         ddl-auto: update
     show-sql: true
+api:
+  url: api.coincap.io/v2/assets

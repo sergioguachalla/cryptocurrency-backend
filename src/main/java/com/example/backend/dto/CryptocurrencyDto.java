@@ -6,6 +6,8 @@ public class CryptocurrencyDto {
     private String name;
     private String symbol;
 
+    private double currentPrice;
+
     public CryptocurrencyDto() {
 
     }
@@ -38,5 +40,13 @@ public class CryptocurrencyDto {
 
     public void setSymbol(String symbol) {
         this.symbol = symbol;
+    }
+
+    public double getCurrentPrice() {
+        return currentPrice;
+    }
+
+    public void setCurrentPrice(double currentPrice) {
+        this.currentPrice = currentPrice;
     }
 }

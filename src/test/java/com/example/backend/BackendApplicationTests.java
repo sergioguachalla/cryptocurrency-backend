@@ -19,8 +19,8 @@ class BackendApplicationTests {
 	@Test
 	public void createCrypto(){
 		Cryptocurrency cryptocurrency = new Cryptocurrency();
-		cryptocurrency.setNombre("Bitcoin");
-		cryptocurrency.setSimbolo("BTC");
+		cryptocurrency.setName("Bitcoin");
+		cryptocurrency.setSymbol("BTC");
 		cryptocurrencyRepository.save(cryptocurrency);
 
 	}
