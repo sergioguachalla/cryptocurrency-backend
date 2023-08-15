@@ -3,7 +3,7 @@ package com.example.backend.entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "CYRPTOCURRENCY")
+@Table(name = "CRYPTOCURRENCY")
 public class Cryptocurrency {
 
     @Id

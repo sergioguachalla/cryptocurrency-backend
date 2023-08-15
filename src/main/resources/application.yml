@@ -13,4 +13,4 @@ spring:
         ddl-auto: update
     show-sql: true
 api:
-  url: api.coincap.io/v2/assets
+  url: https://api.coincap.io/v2/assets
