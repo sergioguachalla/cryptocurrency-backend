@@ -7,6 +7,7 @@ import org.springframework.data.repository.query.Param;
 
 public interface CryptocurrencyRepository extends JpaRepository<Cryptocurrency,Long> {
 
-
+    @Query("SELECT c FROM Cryptocurrency c WHERE c.id = :id")
+    public Cryptocurrency findByCryptocurrencyId(@Param("id") Long id);
 
 }

@@ -8,7 +8,7 @@ public class TransactionDto {
     private Long id;
     private UserDto userId;
     private CryptocurrencyDto cryptocurrencyId;
-    private String transcationType;
+    private String transactionType;
 
     private BigDecimal amount;
 
@@ -18,11 +18,11 @@ public TransactionDto() {
 
     }
 
-    public TransactionDto(Long id, UserDto userId, CryptocurrencyDto cryptocurrencyId, String transcationType, BigDecimal amount, Date transactionDate) {
+    public TransactionDto(Long id, UserDto userId, CryptocurrencyDto cryptocurrencyId, String transactionType, BigDecimal amount, Date transactionDate) {
         this.id = id;
         this.userId = userId;
         this.cryptocurrencyId = cryptocurrencyId;
-        this.transcationType = transcationType;
+        this.transactionType = transactionType;
         this.amount = amount;
         this.transactionDate = transactionDate;
     }
@@ -51,12 +51,12 @@ public TransactionDto() {
         this.cryptocurrencyId = cryptocurrencyId;
     }
 
-    public String getTranscationType() {
-        return transcationType;
+    public String getTransactionType() {
+        return transactionType;
     }
 
     public void setTranscationType(String transcationType) {
-        this.transcationType = transcationType;
+        this.transactionType = transcationType;
     }
 
     public BigDecimal getAmount() {
