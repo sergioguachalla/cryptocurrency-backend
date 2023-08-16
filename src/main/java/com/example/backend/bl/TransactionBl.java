@@ -7,6 +7,7 @@ import com.example.backend.dto.TransactionDto;
 import com.example.backend.entity.Cryptocurrency;
 import com.example.backend.entity.Transaction;
 import com.example.backend.entity.User;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +25,7 @@ public class TransactionBl {
     @Autowired
     private final CryptocurrencyRepository cryptocurrencyRepository;
 
+    private final Logger logger = org.slf4j.LoggerFactory.getLogger(TransactionBl.class);
     public TransactionBl(TransactionRepository transactionRepository,
                          UserRepository userRepository,
                          CryptocurrencyRepository cryptocurrencyRepository) {
@@ -35,9 +37,10 @@ public class TransactionBl {
     public void saveTransaction(TransactionDto transactionDto){
         //User
         User user = userRepository.findByUserId(transactionDto.getUserId().getId());
+        logger.info("User: " + user.toString());
         //Cryptocurrency
         Cryptocurrency cryptocurrency = cryptocurrencyRepository.findByCryptocurrencyId(transactionDto.getCryptocurrencyId().getId());
-
+        logger.info("Cryptocurrency: " + transactionDto.getCryptocurrencyId().getName());
         //Transaction
         Transaction transaction = new Transaction();
         transaction.setUser(user);
