@@ -24,6 +24,21 @@ public class UserBl {
         userRepository.saveAndFlush(newuser);
     }
 
+    public void deleteUser(Long id) {
+        userRepository.findById(id).ifPresent(user -> {
+            user.setStatus(false);
+            userRepository.saveAndFlush(user);
+        });
+
+    }
+
+    public void updateBalance(Long id, UserDto userDto) {
+        userRepository.findById(id).ifPresent(user -> {
+            user.setBalance(userDto.getBalance());
+            userRepository.saveAndFlush(user);
+        });
+    }
+
 
 
 
