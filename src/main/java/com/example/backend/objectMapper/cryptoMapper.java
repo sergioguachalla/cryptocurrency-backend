@@ -6,7 +6,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class cryptoMapper {
 
-    private ObjectMapper objectMapper = new ObjectMapper();
 
     public cryptoMapper() {
 
