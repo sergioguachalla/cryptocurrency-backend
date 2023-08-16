@@ -45,4 +45,14 @@ public class CryptoApi {
         response.setCode("0000");
         return response;
     }
+
+    @PutMapping("api/v1/cryptocurrency/{id}/price")
+    public ResponseDto<String> updateBalance(@PathVariable Long id, @RequestBody CryptocurrencyDto cryptocurrencyDto){
+        ResponseDto response = new ResponseDto();
+        this.cryptocurrencyBl.updateCryptocurrencyCurrentPrice(id, cryptocurrencyDto);
+        response.setErrorMessage(null);
+        response.setResponse("Cryptocurrency balance updated");
+        response.setCode("0000");
+        return response;
+    }
 }

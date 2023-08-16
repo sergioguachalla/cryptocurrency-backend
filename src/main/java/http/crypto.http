@@ -11,3 +11,13 @@ GET http://localhost:8080/api/v1/cryptocurrency
 
 ###
 PUT http://localhost:8080/api/v1/cryptocurrency/1
+
+###
+PUT http://localhost:8080/api/v1/cryptocurrency/2/price
+Content-Type: application/json
+
+{
+    "currentPrice": 909009
+}
+
+

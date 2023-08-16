@@ -52,10 +52,13 @@ public class CryptocurrencyBl {
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
+    }
 
-        //logger.info("Saving cryptocurrency");
-
-        //logger.info("Cryptocurrency saved");
+    public void updateCryptocurrencyCurrentPrice(Long id, CryptocurrencyDto cryptocurrencyDto){
+        Cryptocurrency cryptocurrency = cryptocurrencyRepository.findById(id).orElse(null);
+        assert cryptocurrency != null;
+        cryptocurrency.setCurrentPrice(cryptocurrencyDto.getCurrentPrice());
+        cryptocurrencyRepository.save(cryptocurrency);
 
     }
 
@@ -72,13 +75,6 @@ public class CryptocurrencyBl {
         return cryptocurrencyDtoList;
     }
 
-
-    public String getAssets() {
-        logger.info("Getting assets");
-        RestTemplate restTemplate = new RestTemplate();
-        logger.info("Assets received");
-        return restTemplate.getForObject(API_URL, String.class);
-    }
 
     public String invokeApi(String id) {
         RestTemplate restTemplate = new RestTemplate();
