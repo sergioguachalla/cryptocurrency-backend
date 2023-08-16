@@ -2,10 +2,12 @@ POST http://localhost:8080/api/v1/cryptocurrency
 Content-Type: application/json
 
 {
-    "name": "bitcoin"
+    "name": "ethereum"
 }
 
 
 ###
 GET http://localhost:8080/api/v1/cryptocurrency
 
+###
+PUT http://localhost:8080/api/v1/cryptocurrency/1

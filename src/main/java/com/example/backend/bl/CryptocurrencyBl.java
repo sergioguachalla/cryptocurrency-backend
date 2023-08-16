@@ -3,6 +3,7 @@ package com.example.backend.bl;
 import com.example.backend.dao.CryptocurrencyRepository;
 import com.example.backend.dto.CryptocurrencyDto;
 import com.example.backend.entity.Cryptocurrency;
+import com.example.backend.objectMapper.cryptoMapper;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -12,6 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class CryptocurrencyBl {
@@ -55,6 +59,19 @@ public class CryptocurrencyBl {
 
     }
 
+    public List<CryptocurrencyDto> getAll(){
+        cryptoMapper cryptoMapper = new cryptoMapper();
+        logger.info("Getting all cryptocurrencies");
+        List<Cryptocurrency> cryptocurrencyList = cryptocurrencyRepository.findAll();
+        List<CryptocurrencyDto> cryptocurrencyDtoList = new ArrayList<>();
+        for (Cryptocurrency cryptocurrency : cryptocurrencyList) {
+            CryptocurrencyDto cryptocurrencyDto = cryptoMapper.toCryptoDto(cryptocurrency);
+            cryptocurrencyDtoList.add(cryptocurrencyDto);
+        }
+        logger.info("Cryptocurrencies received");
+        return cryptocurrencyDtoList;
+    }
+
 
     public String getAssets() {
         logger.info("Getting assets");
@@ -65,8 +82,7 @@ public class CryptocurrencyBl {
 
     public String invokeApi(String id) {
         RestTemplate restTemplate = new RestTemplate();
-        String response = restTemplate.getForObject(API_URL + "/" + id, String.class);
-        return response;
+        return restTemplate.getForObject(API_URL + "/" + id, String.class);
     }
 
     private JsonNode parseJsonResponse(String response) throws JsonProcessingException {
@@ -83,6 +99,15 @@ public class CryptocurrencyBl {
         cryptocurrencyDto.setCurrentPrice(dataNode.get("priceUsd").asDouble());
 
         return cryptocurrencyDto;
+    }
+
+    public void deleteCryptocurrency(Long id) {
+        Cryptocurrency cryptocurrency = cryptocurrencyRepository.findById(id).orElse(null);
+        assert cryptocurrency != null;
+        cryptocurrency.setStatus(false);
+        cryptocurrencyRepository.save(cryptocurrency);
+
+
     }
 
 }

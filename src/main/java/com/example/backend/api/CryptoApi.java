@@ -4,10 +4,9 @@ import com.example.backend.bl.CryptocurrencyBl;
 import com.example.backend.dto.CryptocurrencyDto;
 import com.example.backend.dto.ResponseDto;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 public class CryptoApi {
@@ -19,7 +18,7 @@ public class CryptoApi {
         this.cryptocurrencyBl = cryptocurrencyBl;
     }
     @PostMapping("api/v1/cryptocurrency")
-    public ResponseDto saveCrypto(@RequestBody CryptocurrencyDto cryptocurrencyDto){
+    public ResponseDto<String> saveCrypto(@RequestBody CryptocurrencyDto cryptocurrencyDto){
         ResponseDto response = new ResponseDto();
         this.cryptocurrencyBl.saveCryptocurrency(cryptocurrencyDto);
         response.setErrorMessage(null);
@@ -29,10 +28,20 @@ public class CryptoApi {
     }
 
     @GetMapping("api/v1/cryptocurrency")
-    public ResponseDto getAssets(){
-        ResponseDto response = new ResponseDto();
+    public ResponseDto<List<CryptocurrencyDto>> getAssets(){
+        ResponseDto<List<CryptocurrencyDto>> response = new ResponseDto<>();
         response.setErrorMessage(null);
-        response.setResponse(this.cryptocurrencyBl.getAssets());
+        response.setResponse(this.cryptocurrencyBl.getAll());
+        response.setCode("0000");
+        return response;
+    }
+
+    @PutMapping("api/v1/cryptocurrency/{id}")
+    public ResponseDto<String> deleteCrypto(@PathVariable Long id){
+        ResponseDto response = new ResponseDto();
+        this.cryptocurrencyBl.deleteCryptocurrency(id);
+        response.setErrorMessage(null);
+        response.setResponse("Cryptocurrency deleted");
         response.setCode("0000");
         return response;
     }

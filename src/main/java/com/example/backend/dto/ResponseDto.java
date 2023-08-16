@@ -1,12 +1,12 @@
 package com.example.backend.dto;
 
-public class ResponseDto {
+public class ResponseDto<T> {
 
     private String errorMessage;
     private String code;
-    private String response;
+    private T response;
 
-    public ResponseDto(String errorMessage, String code, String response) {
+    public ResponseDto(String errorMessage, String code, T response) {
         this.errorMessage = errorMessage;
         this.code = code;
         this.response = response;
@@ -30,11 +30,11 @@ public class ResponseDto {
         this.code = code;
     }
 
-    public String getResponse() {
+    public T getResponse() {
         return response;
     }
 
-    public void setResponse(String response) {
+    public void setResponse(T response) {
         this.response = response;
     }
 }
