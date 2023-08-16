@@ -3,6 +3,7 @@ package com.example.backend.bl;
 import com.example.backend.dao.CryptocurrencyRepository;
 import com.example.backend.dto.CryptocurrencyDto;
 import com.example.backend.entity.Cryptocurrency;
+import com.example.backend.exceptions.CryptocurrencyUpdateException;
 import com.example.backend.objectMapper.cryptoMapper;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -41,39 +42,55 @@ public class CryptocurrencyBl {
         try {
             JsonNode jsonNode = parseJsonResponse(response);
             CryptocurrencyDto cryptocurrencyDto1 = mapJsonToCryptocurrencyDto(jsonNode);
-            logger.info("CryptocurrencyDto: {}", cryptocurrencyDto1.getName());
+            logger.info("Recibiendo info de " + cryptocurrencyDto.getName() + " desde coinbase");
             Cryptocurrency cryptocurrency = new Cryptocurrency();
             cryptocurrency.setName(cryptocurrencyDto1.getName());
             cryptocurrency.setSymbol(cryptocurrencyDto1.getSymbol());
             cryptocurrency.setCurrentPrice(cryptocurrencyDto1.getCurrentPrice());
             cryptocurrency.setStatus(true);
+            logger.info("Guardando " + cryptocurrencyDto.getName() + " a la base de datos");
             cryptocurrencyRepository.save(cryptocurrency);
 
         } catch (JsonProcessingException e) {
             e.printStackTrace();
+            logger.error("Error al guardar la criptomoneda");
         }
     }
 
-    public void updateCryptocurrencyCurrentPrice(Long id, CryptocurrencyDto cryptocurrencyDto){
-        Cryptocurrency cryptocurrency = cryptocurrencyRepository.findById(id).orElse(null);
-        assert cryptocurrency != null;
-        cryptocurrency.setCurrentPrice(cryptocurrencyDto.getCurrentPrice());
-        cryptocurrencyRepository.save(cryptocurrency);
+    public void updateCryptocurrencyCurrentPrice(Long id, CryptocurrencyDto cryptocurrencyDto) {
+        try {
+            Cryptocurrency cryptocurrency = cryptocurrencyRepository.findById(id).orElse(null);
+            if (cryptocurrency == null) {
+                throw new CryptocurrencyUpdateException("Criptomoneda no encontrada para la actualización", null);
+            }
+            cryptocurrency.setCurrentPrice(cryptocurrencyDto.getCurrentPrice());
+            cryptocurrencyRepository.save(cryptocurrency);
 
-    }
-
-    public List<CryptocurrencyDto> getAll(){
-        cryptoMapper cryptoMapper = new cryptoMapper();
-        logger.info("Getting all cryptocurrencies");
-        List<Cryptocurrency> cryptocurrencyList = cryptocurrencyRepository.findAll();
-        List<CryptocurrencyDto> cryptocurrencyDtoList = new ArrayList<>();
-        for (Cryptocurrency cryptocurrency : cryptocurrencyList) {
-            CryptocurrencyDto cryptocurrencyDto = cryptoMapper.toCryptoDto(cryptocurrency);
-            cryptocurrencyDtoList.add(cryptocurrencyDto);
+        } catch (Exception e) {
+            throw new CryptocurrencyUpdateException("Error al actualizar el precio de la criptomoneda", e);
         }
-        logger.info("Cryptocurrencies received");
-        return cryptocurrencyDtoList;
     }
+
+
+    public List<CryptocurrencyDto> getAll() {
+        try {
+            cryptoMapper cryptoMapper = new cryptoMapper();
+            logger.info("Obteniendo las criptomonedas desde la base de datos");
+            List<Cryptocurrency> cryptocurrencyList = cryptocurrencyRepository.findAll();
+            List<CryptocurrencyDto> cryptocurrencyDtoList = new ArrayList<>();
+            for (Cryptocurrency cryptocurrency : cryptocurrencyList) {
+                CryptocurrencyDto cryptocurrencyDto = cryptoMapper.toCryptoDto(cryptocurrency);
+                cryptocurrencyDtoList.add(cryptocurrencyDto);
+            }
+            logger.info("Criptomonedas obtenidas desde la base de datos");
+            return cryptocurrencyDtoList;
+
+        } catch (Exception e) {
+            logger.error("Error al obtener las criptomonedas: {}", e.getMessage());
+            return new ArrayList<>();
+        }
+    }
+
 
 
     public String invokeApi(String id) {
