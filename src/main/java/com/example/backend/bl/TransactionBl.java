@@ -7,11 +7,13 @@ import com.example.backend.dto.TransactionDto;
 import com.example.backend.entity.Cryptocurrency;
 import com.example.backend.entity.Transaction;
 import com.example.backend.entity.User;
+import com.example.backend.objectMapper.TransactionMapper;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class TransactionBl {
@@ -50,7 +52,18 @@ public class TransactionBl {
         Date date = new Date();
         transaction.setTransactionDate(date);
         transactionRepository.saveAndFlush(transaction);
+    }
 
+    public List<TransactionDto> getTransactions(){
+        List<Transaction> transactions = transactionRepository.findAll();
+        return new TransactionMapper().toTransactionDtoList(transactions);
+    }
+
+    public void updateTransactionAmount(Long id, TransactionDto transactionDto){
+        Transaction transaction = transactionRepository.findById(id).orElse(null);
+        assert transaction != null;
+        transaction.setAmount(transactionDto.getAmount());
+        transactionRepository.save(transaction);
     }
 
 
