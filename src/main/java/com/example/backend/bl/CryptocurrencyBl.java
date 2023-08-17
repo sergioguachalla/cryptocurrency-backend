@@ -29,9 +29,6 @@ public class CryptocurrencyBl {
     @Value("${api.url}")
     private String API_URL;
 
-    public String getAPI_URL() {
-        return API_URL;
-    }
 
     public CryptocurrencyBl(CryptocurrencyRepository cryptocurrencyRepository) {
         this.cryptocurrencyRepository = cryptocurrencyRepository;
