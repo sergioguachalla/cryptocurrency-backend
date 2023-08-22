@@ -1,9 +1,9 @@
 server:
-  port: 8080
+  port: 8090
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/crypto
+    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/crypto}
     username: postgres
     password: admin
     driver-class-name: org.postgresql.Driver
