@@ -31,6 +31,7 @@ public class CryptoApi {
         return response;
     }
 
+    @CrossOrigin(origins = "*")
     @GetMapping("api/v1/cryptocurrency")
     public ResponseDto<Page<CryptocurrencyDto>> getAssets(@RequestParam int page, @RequestParam int size){
         ResponseDto<Page<CryptocurrencyDto>> response = new ResponseDto<>();
