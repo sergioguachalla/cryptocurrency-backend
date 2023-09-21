@@ -52,6 +52,9 @@ public class CryptocurrencyBl {
             e.printStackTrace();
             logger.error("Error al guardar la criptomoneda");
         }
+
+
+
     }
 
     public void updateCryptocurrencyCurrentPrice(Long id, CryptocurrencyDto cryptocurrencyDto) {
@@ -73,7 +76,7 @@ public class CryptocurrencyBl {
         try {
             cryptoMapper cryptoMapper = new cryptoMapper();
             logger.info("Obteniendo las criptomonedas desde la base de datos");
-            List<Cryptocurrency> cryptocurrencyList = cryptocurrencyRepository.findAll();
+            List<Cryptocurrency> cryptocurrencyList = cryptocurrencyRepository.findAllByStatus(true);
             List<CryptocurrencyDto> cryptocurrencyDtoList = new ArrayList<>();
             for (Cryptocurrency cryptocurrency : cryptocurrencyList) {
                 CryptocurrencyDto cryptocurrencyDto = cryptoMapper.toCryptoDto(cryptocurrency);
@@ -87,6 +90,7 @@ public class CryptocurrencyBl {
             return new ArrayList<>();
         }
     }
+
 
 
 

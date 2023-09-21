@@ -1,5 +1,5 @@
 server:
-  port: 8090
+  port: 8081
 
 spring:
   datasource:
@@ -12,5 +12,16 @@ spring:
     hibernate:
         ddl-auto: update
     show-sql: true
+  security:
+    oauth2:
+      resource-server:
+        jwt:
+          issuer-uri: http://localhost:8080/realms/arquitectura
+          jwk-set-uri: ${spring.security.oauth2.resource-server.jwt.issuer-uri}/protocol/openid-connect/certs
+
 api:
   url: https://api.coincap.io/v2/assets
+token:
+  converter:
+    principal-attribute: preferred_username
+    resource-id: backend
