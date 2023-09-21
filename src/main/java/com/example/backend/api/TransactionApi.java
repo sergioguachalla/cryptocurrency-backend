@@ -14,7 +14,7 @@ public class TransactionApi {
     @Autowired
     private TransactionBl transactionBl;
 
-    @PostMapping("api/v1/transaction")
+    /* @PostMapping("api/v1/transaction")
     public ResponseDto<String> saveTransaction(@RequestBody TransactionDto transactionDto){
         ResponseDto<String> responseDto = new ResponseDto<>();
         this.transactionBl.saveTransaction(transactionDto);
@@ -23,6 +23,8 @@ public class TransactionApi {
         responseDto.setCode("0000");
         return responseDto;
     }
+
+     */
 
     @GetMapping("api/v1/transactions")
     public ResponseDto<List<TransactionDto>> getTransactions(){

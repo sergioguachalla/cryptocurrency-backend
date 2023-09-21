@@ -27,9 +27,11 @@ public class GlobalSecurityConfiguration {
         http.authorizeHttpRequests((authorizedHttpRequests ->{
             authorizedHttpRequests
                     .requestMatchers("api/v1/cryptocurrency").permitAll()
-                    .requestMatchers("api/v1/cryptocurrency/{id}").hasRole("DELETE-CRYPTO")
+                    .requestMatchers("api/v1/cryptocurrency/{id}").permitAll()
                     .anyRequest()
                     .authenticated();
+
+
 
         }));
         http.oauth2ResourceServer((oauth2 ->{

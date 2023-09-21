@@ -12,6 +12,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -72,24 +75,25 @@ public class CryptocurrencyBl {
     }
 
 
-    public List<CryptocurrencyDto> getAll() {
+    public Page<CryptocurrencyDto> getAll(int page, int size) {
         try {
-            cryptoMapper cryptoMapper = new cryptoMapper();
-            logger.info("Obteniendo las criptomonedas desde la base de datos");
-            List<Cryptocurrency> cryptocurrencyList = cryptocurrencyRepository.findAllByStatus(true);
-            List<CryptocurrencyDto> cryptocurrencyDtoList = new ArrayList<>();
-            for (Cryptocurrency cryptocurrency : cryptocurrencyList) {
-                CryptocurrencyDto cryptocurrencyDto = cryptoMapper.toCryptoDto(cryptocurrency);
-                cryptocurrencyDtoList.add(cryptocurrencyDto);
-            }
-            logger.info("Criptomonedas obtenidas desde la base de datos");
-            return cryptocurrencyDtoList;
+            Pageable cryptocurrencyPage = PageRequest.of(page, size);
+            Page<Cryptocurrency> cryptocurrenciesPage = cryptocurrencyRepository.findAllByStatusTrue(cryptocurrencyPage);
 
+            return cryptocurrenciesPage.map(cryptocurrency -> {
+                CryptocurrencyDto dto = new CryptocurrencyDto();
+                dto.setId(cryptocurrency.getId());
+                dto.setName(cryptocurrency.getName());
+                dto.setSymbol(cryptocurrency.getSymbol());
+                // Mapear otros campos si es necesario
+
+                return dto;
+            });
         } catch (Exception e) {
-            logger.error("Error al obtener las criptomonedas: {}", e.getMessage());
-            return new ArrayList<>();
+            throw new CryptocurrencyUpdateException("Error al obtener las criptomonedas", e);
         }
     }
+
 
 
 

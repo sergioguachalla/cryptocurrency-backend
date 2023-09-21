@@ -3,7 +3,9 @@ package com.example.backend.api;
 import com.example.backend.bl.CryptocurrencyBl;
 import com.example.backend.dto.CryptocurrencyDto;
 import com.example.backend.dto.ResponseDto;
+import com.example.backend.entity.Cryptocurrency;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,10 +32,10 @@ public class CryptoApi {
     }
 
     @GetMapping("api/v1/cryptocurrency")
-    public ResponseDto<List<CryptocurrencyDto>> getAssets(){
-        ResponseDto<List<CryptocurrencyDto>> response = new ResponseDto<>();
+    public ResponseDto<Page<CryptocurrencyDto>> getAssets(@RequestParam int page, @RequestParam int size){
+        ResponseDto<Page<CryptocurrencyDto>> response = new ResponseDto<>();
         response.setErrorMessage(null);
-        response.setResponse(this.cryptocurrencyBl.getAll());
+        response.setResponse(this.cryptocurrencyBl.getAll(page, size));
         response.setCode("0000");
         return response;
     }

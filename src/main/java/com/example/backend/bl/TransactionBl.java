@@ -36,7 +36,7 @@ public class TransactionBl {
         this.transactionRepository = transactionRepository;
     }
 
-    public void saveTransaction(TransactionDto transactionDto){
+   /* public void saveTransaction(TransactionDto transactionDto){
         //User
         User user = userRepository.findByUserId(transactionDto.getUserId().getId());
         logger.info("User: " + user.toString());
@@ -53,6 +53,8 @@ public class TransactionBl {
         transaction.setTransactionDate(date);
         transactionRepository.saveAndFlush(transaction);
     }
+
+    */
 
     public List<TransactionDto> getTransactions(){
         List<Transaction> transactions = transactionRepository.findAll();
