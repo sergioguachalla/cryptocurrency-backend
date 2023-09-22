@@ -21,6 +21,8 @@ spring:
 
 api:
   url: https://api.coincap.io/v2/assets
+  auth: http://localhost:8080/realms/arquitectura/protocol/openid-connect/token
+
 token:
   converter:
     principal-attribute: preferred_username

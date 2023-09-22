@@ -6,6 +6,7 @@ import com.example.backend.dto.ResponseDto;
 import com.example.backend.entity.Cryptocurrency;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -33,11 +34,11 @@ public class CryptoApi {
 
     @CrossOrigin(origins = "*")
     @GetMapping("api/v1/cryptocurrency")
-    public ResponseDto<Page<CryptocurrencyDto>> getAssets(@RequestParam int page, @RequestParam int size){
+    public ResponseDto<Page<CryptocurrencyDto>> getAssets(@RequestParam int page, @RequestParam int size, Authentication authentication){
         ResponseDto<Page<CryptocurrencyDto>> response = new ResponseDto<>();
         response.setErrorMessage(null);
         response.setResponse(this.cryptocurrencyBl.getAll(page, size));
-        response.setCode("0000");
+        response.setCode(authentication.getAuthorities()+"");
         return response;
     }
 
