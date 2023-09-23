@@ -34,7 +34,7 @@ public class GlobalSecurityConfiguration {
         http.authorizeHttpRequests((authorizeHttpRequests ->{
             authorizeHttpRequests
                     .requestMatchers("/api/v1/auth/token").permitAll()
-                    .requestMatchers("/api/v1/cryptocurrency").hasRole("ADMIN")
+                    .requestMatchers("/api/v1/cryptocurrency").hasRole("VIEW-CRYPTOS")
                     .anyRequest()
                     .denyAll();
 
