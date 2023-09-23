@@ -85,8 +85,7 @@ public class CryptocurrencyBl {
                 dto.setId(cryptocurrency.getId());
                 dto.setName(cryptocurrency.getName());
                 dto.setSymbol(cryptocurrency.getSymbol());
-                // Mapear otros campos si es necesario
-
+                dto.setCurrentPrice(cryptocurrency.getCurrentPrice());
                 return dto;
             });
         } catch (Exception e) {
