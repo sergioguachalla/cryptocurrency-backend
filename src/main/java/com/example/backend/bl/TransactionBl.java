@@ -3,6 +3,7 @@ package com.example.backend.bl;
 import com.example.backend.dao.CryptocurrencyRepository;
 import com.example.backend.dao.TransactionRepository;
 import com.example.backend.dao.UserRepository;
+import com.example.backend.dto.PortfolioDto;
 import com.example.backend.dto.TransactionDto;
 import com.example.backend.entity.Cryptocurrency;
 import com.example.backend.entity.Transaction;
@@ -13,10 +14,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import javax.sound.sampled.Port;
 import java.math.BigDecimal;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class TransactionBl {
@@ -34,7 +34,7 @@ public class TransactionBl {
         this.cryptocurrencyRepository = cryptocurrencyRepository;
     }
 
-    public Page<TransactionDto> findByUserIdAndCryptocurrencyId(String userId, Long cryptocurrencyId, int page, int size) {
+    public Page<TransactionDto> findByUserIdAndCryptocurrencyId(int userId, int cryptocurrencyId, int page, int size) {
         Pageable pageable = PageRequest.of(page, size, Sort.by("transactionDate").descending());
         Page<Transaction> transactions = transactionRepository.findByUserIdAndCryptocurrencyId(userId, cryptocurrencyId, pageable);
         return transactions.map(transaction -> new TransactionDto(transaction.getId(),
@@ -64,5 +64,34 @@ public class TransactionBl {
         }
 
     }
+
+    public Page<PortfolioDto> findTotalAmountByUserIdAndCryptocurrencyId(String userId, Long cryptocurrencyId, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("totalAmount").descending());
+        Page<Transaction> transactions = transactionRepository.findTotalAmountByUserIdAndCryptocurrencyId(userId, cryptocurrencyId, pageable);
+        return transactions.map(transaction -> new PortfolioDto(transaction.getUser().getKeyCloakId(),
+                transaction.getCryptocurrencyId().getName(), transaction.getCryptocurrencyId().getSymbol(),
+                transaction.getAmount(), transaction.getPrice()));
+
+    }
+
+    public List<PortfolioDto> getPortfolio(String userId) {
+        List<Object[]> portfolio = transactionRepository.getPortfolio(userId);
+        List<PortfolioDto> portfolioDtoList = new ArrayList<>();
+        for (Object[] objects :
+                portfolio) {
+            PortfolioDto portfolioDto = new PortfolioDto();
+            Cryptocurrency cryptocurrency = cryptocurrencyRepository.findById((Long) objects[0]).get();
+            portfolioDto.setCryptocurrencyName(cryptocurrency.getName());
+            portfolioDto.setCryptocurrencySymbol(cryptocurrency.getSymbol());
+            portfolioDto.setTotalAmount((BigDecimal) objects[1]);
+            portfolioDto.setAmountInUsd((BigDecimal) objects[1]);
+            portfolioDtoList.add(portfolioDto);
+        }
+        return portfolioDtoList;
+
+
+    }
+
+
 }
 

@@ -33,12 +33,14 @@ public class GlobalSecurityConfiguration {
      public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests((authorizeHttpRequests ->{
             authorizeHttpRequests
+
                     .requestMatchers("/api/v1/cryptocurrency").hasRole("VIEW-CRYPTOS")
                     .requestMatchers("api/v1/cryptocurrency/{id}/price").hasRole("VIEW-CRYPTOS")
                     .requestMatchers("/api/v1/cryptocurrency/{id}").hasRole("VIEW-CRYPTOS")
                     .requestMatchers("/api/v1/transactions").authenticated()
-                    .requestMatchers("/api/v1/transactions/{id}/").permitAll()
-                    .requestMatchers("api/v1/user").authenticated()
+                    .requestMatchers("api/v1/portfolio").authenticated()
+                    .requestMatchers("/api/v1/transactions/{id}/{cryptoId}/").permitAll()
+                    .requestMatchers("/api/v1/user").authenticated()
                     .anyRequest()
                     .denyAll();
 

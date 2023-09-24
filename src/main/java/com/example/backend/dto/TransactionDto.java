@@ -5,7 +5,7 @@ import java.util.Date;
 
 public class TransactionDto {
     private Long id;
-    private String keycloakUserId;
+    private String userId;
     private Long cryptocurrencyId;
     private Date date;
     private String type;
@@ -17,7 +17,7 @@ public class TransactionDto {
 
     public TransactionDto(Long id, String userId, Long cryptocurrencyId, Date date, String type, BigDecimal quantity, BigDecimal price) {
         this.id = id;
-        this.keycloakUserId = userId;
+        this.userId = userId;
         this.cryptocurrencyId = cryptocurrencyId;
         this.date = date;
         this.type = type;
@@ -34,11 +34,11 @@ public class TransactionDto {
     }
 
     public String getKeycloakUserId() {
-        return keycloakUserId;
+        return userId;
     }
 
     public void setKeycloakUserId(String keycloakUserId) {
-        this.keycloakUserId = keycloakUserId;
+        this.userId = keycloakUserId;
     }
 
     public Long getCryptocurrencyId() {
