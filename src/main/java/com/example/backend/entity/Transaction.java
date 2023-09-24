@@ -19,25 +19,29 @@ public class Transaction {
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "cryptocurrency_id", referencedColumnName = "id")
-    private Cryptocurrency cryptocurrency;
+    @JoinColumn(name = "crypto_id", referencedColumnName = "id")
+    private Cryptocurrency cryptocurrencyId;
 
-    @Column(name = "transaction_type", nullable = false)
+    @Column(name = "type", nullable = false)
     private String transactionType;
 
     @Column(name = "amount", nullable = false)
     private BigDecimal amount;
 
-    @Column(name = "transaction_date", nullable = false)
+    @Column(name = "price", nullable = false)
+    private BigDecimal price;
+
+    @Column(name = "date", nullable = false)
     private Date transactionDate;
 
 
-    public Transaction(Long id, User user, Cryptocurrency cryptocurrency, String transactionType, BigDecimal amount, Date transactionDate) {
+    public Transaction(Long id, User user, Cryptocurrency cryptocurrencyId, String transactionType, BigDecimal amount, BigDecimal price, Date transactionDate) {
         this.id = id;
         this.user = user;
-        this.cryptocurrency = cryptocurrency;
+        this.cryptocurrencyId = cryptocurrencyId;
         this.transactionType = transactionType;
         this.amount = amount;
+        this.price = price;
         this.transactionDate = transactionDate;
     }
 
@@ -61,12 +65,12 @@ public class Transaction {
         this.user = user;
     }
 
-    public Cryptocurrency getCryptocurrency() {
-        return cryptocurrency;
+    public Cryptocurrency getCryptocurrencyId() {
+        return cryptocurrencyId;
     }
 
-    public void setCryptocurrency(Cryptocurrency cryptocurrency) {
-        this.cryptocurrency = cryptocurrency;
+    public void setCryptocurrencyId(Cryptocurrency cryptocurrencyId) {
+        this.cryptocurrencyId = cryptocurrencyId;
     }
 
     public String getTransactionType() {
@@ -83,6 +87,14 @@ public class Transaction {
 
     public void setAmount(BigDecimal amount) {
         this.amount = amount;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
     }
 
     public Date getTransactionDate() {

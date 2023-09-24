@@ -4,27 +4,25 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 public class TransactionDto {
-
     private Long id;
-    private UserDto userId;
-    private CryptocurrencyDto cryptocurrencyId;
-    private String transactionType;
+    private String keycloakUserId;
+    private Long cryptocurrencyId;
+    private Date date;
+    private String type;
+    private BigDecimal quantity;
+    private BigDecimal price;
 
-    private BigDecimal amount;
-
-    private Date transactionDate;
-
-public TransactionDto() {
-
+    public TransactionDto() {
     }
 
-    public TransactionDto(Long id, UserDto userId, CryptocurrencyDto cryptocurrencyId, String transactionType, BigDecimal amount, Date transactionDate) {
+    public TransactionDto(Long id, String userId, Long cryptocurrencyId, Date date, String type, BigDecimal quantity, BigDecimal price) {
         this.id = id;
-        this.userId = userId;
+        this.keycloakUserId = userId;
         this.cryptocurrencyId = cryptocurrencyId;
-        this.transactionType = transactionType;
-        this.amount = amount;
-        this.transactionDate = transactionDate;
+        this.date = date;
+        this.type = type;
+        this.quantity = quantity;
+        this.price = price;
     }
 
     public Long getId() {
@@ -35,45 +33,51 @@ public TransactionDto() {
         this.id = id;
     }
 
-    public UserDto getUserId() {
-        return userId;
+    public String getKeycloakUserId() {
+        return keycloakUserId;
     }
 
-    public void setUserId(UserDto userId) {
-        this.userId = userId;
+    public void setKeycloakUserId(String keycloakUserId) {
+        this.keycloakUserId = keycloakUserId;
     }
 
-    public CryptocurrencyDto getCryptocurrencyId() {
+    public Long getCryptocurrencyId() {
         return cryptocurrencyId;
     }
 
-    public void setCryptocurrencyId(CryptocurrencyDto cryptocurrencyId) {
+    public void setCryptocurrencyId(Long cryptocurrencyId) {
         this.cryptocurrencyId = cryptocurrencyId;
     }
 
-    public String getTransactionType() {
-        return transactionType;
+    public Date getDate() {
+        return date;
     }
 
-    public void setTranscationType(String transcationType) {
-        this.transactionType = transcationType;
+    public void setDate(Date date) {
+        this.date = date;
     }
 
-    public BigDecimal getAmount() {
-        return amount;
+    public String getType() {
+        return type;
     }
 
-    public void setAmount(BigDecimal amount) {
-        this.amount = amount;
+    public void setType(String type) {
+        this.type = type;
     }
 
-    public Date getTransactionDate() {
-        return transactionDate;
+    public BigDecimal getQuantity() {
+        return quantity;
     }
 
-    public void setTransactionDate(Date transactionDate) {
-        this.transactionDate = transactionDate;
+    public void setQuantity(BigDecimal quantity) {
+        this.quantity = quantity;
     }
 
+    public BigDecimal getPrice() {
+        return price;
+    }
 
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
 }

@@ -13,9 +13,12 @@ public class UserMapper {
         UserDto userDto = new UserDto();
         userDto.setId(user.getId());
         userDto.setUsername(user.getUsername());
-        userDto.setEmail(user.getEmail());
-        userDto.setBalance(user.getBalance());
-        userDto.setStatus(user.isStatus());
+        userDto.setName(user.getName());
+        userDto.setKeyCloakId(user.getKeyCloakId());
+
+//        userDto.setEmail(user.getEmail());
+//        userDto.setBalance(user.getBalance());
+//        userDto.setStatus(user.isStatus());
         return userDto;
     }
 }

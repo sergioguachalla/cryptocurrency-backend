@@ -6,19 +6,21 @@ public class UserDto {
 
     private Long id;
     private String username;
+    private String name;
+    private String keyCloakId;
     private String email;
     private BigDecimal balance;
-    private boolean status;
 
     public UserDto() {
 
     }
-    public UserDto(Long id, String username, String email, BigDecimal balance, boolean status) {
+    public UserDto(Long id, String username, String email, BigDecimal balance, String name, String keyCloakId) {
         this.id = id;
         this.username = username;
         this.email = email;
         this.balance = balance;
-        this.status = status;
+        this.name = name;
+        this.keyCloakId = keyCloakId;
     }
 
     public Long getId() {
@@ -53,11 +55,19 @@ public class UserDto {
         this.balance = balance;
     }
 
-    public boolean isStatus() {
-        return status;
+    public String getName() {
+        return name;
     }
 
-    public void setStatus(boolean status) {
-        this.status = status;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getKeyCloakId() {
+        return keyCloakId;
+    }
+
+    public void setKeyCloakId(String keyCloakId) {
+        this.keyCloakId = keyCloakId;
     }
 }

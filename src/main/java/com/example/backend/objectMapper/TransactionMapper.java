@@ -12,19 +12,19 @@ public class TransactionMapper {
 
     }
 
-    public List<TransactionDto> toTransactionDtoList(List<Transaction> transactionList){
-        List<TransactionDto> transactionDtoList = new ArrayList<>();
-        for(Transaction transaction : transactionList){
-            TransactionDto transactionDto = new TransactionDto();
-            transactionDto.setId(transaction.getId());
-            transactionDto.setUserId(new UserMapper().toUserDto(transaction.getUser()));
-            transactionDto.setCryptocurrencyId(new cryptoMapper().toCryptoDto(transaction.getCryptocurrency()));
-            transactionDto.setTranscationType(transaction.getTransactionType());
-            transactionDto.setAmount(transaction.getAmount());
-            transactionDto.setTransactionDate(transaction.getTransactionDate());
-            transactionDtoList.add(transactionDto);
-        }
-        return transactionDtoList;
-    }
+//    public List<TransactionDto> toTransactionDtoList(List<Transaction> transactionList){
+//        List<TransactionDto> transactionDtoList = new ArrayList<>();
+//        for(Transaction transaction : transactionList){
+//            TransactionDto transactionDto = new TransactionDto();
+//            transactionDto.setId(transaction.getId());
+//            transactionDto.setUserId(new UserMapper().toUserDto(transaction.getUser()));
+//            transactionDto.setCryptocurrencyId(new cryptoMapper().toCryptoDto(transaction.getCryptocurrencyId()));
+//            transactionDto.setTranscationType(transaction.getTransactionType());
+//            transactionDto.setAmount(transaction.getAmount());
+//            transactionDto.setTransactionDate(transaction.getTransactionDate());
+//            transactionDtoList.add(transactionDto);
+//        }
+//        return transactionDtoList;
+//    }
 
 }

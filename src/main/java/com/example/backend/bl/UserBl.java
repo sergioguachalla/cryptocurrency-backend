@@ -41,28 +41,39 @@ public class UserBl {
         }
     }
 
-    public void saveUser(UserDto userDto) {
-        User newuser = new User();
-        newuser.setUsername(userDto.getUsername());
-        newuser.setEmail(userDto.getEmail());
-        newuser.setBalance(userDto.getBalance());
-        newuser.setStatus(true);
-        userRepository.saveAndFlush(newuser);
-    }
+//    public void saveUser(UserDto userDto) {
+//        User newuser = new User();
+//        newuser.setUsername(userDto.getUsername());
+//        newuser.setEmail(userDto.getEmail());
+//        newuser.setBalance(userDto.getBalance());
+//        newuser.setStatus(true);
+//        userRepository.saveAndFlush(newuser);
+//    }
 
-    public void deleteUser(Long id) {
-        userRepository.findById(id).ifPresent(user -> {
-            user.setStatus(false);
+//    public void deleteUser(Long id) {
+//        userRepository.findById(id).ifPresent(user -> {
+//            user.setStatus(false);
+//            userRepository.saveAndFlush(user);
+//        });
+//
+//    }
+
+//    public void updateBalance(Long id, UserDto userDto) {
+//        userRepository.findById(id).ifPresent(user -> {
+//            user.setBalance(userDto.getBalance());
+//            userRepository.saveAndFlush(user);
+//        });
+//    }
+
+    public void createUser(UserDto userDto){
+        if(userRepository.findByUsername(userDto.getUsername()) == null){
+            User user = new User();
+            user.setUsername(userDto.getUsername());
+            user.setKeyCloakId(userDto.getKeyCloakId());
+            user.setName(userDto.getName());
             userRepository.saveAndFlush(user);
-        });
+        }
 
-    }
-
-    public void updateBalance(Long id, UserDto userDto) {
-        userRepository.findById(id).ifPresent(user -> {
-            user.setBalance(userDto.getBalance());
-            userRepository.saveAndFlush(user);
-        });
     }
 
 

@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -37,8 +38,13 @@ public class CryptocurrencyBl {
         this.cryptocurrencyRepository = cryptocurrencyRepository;
     }
 
-    public void saveCryptocurrency(CryptocurrencyDto cryptocurrencyDto) {
+    public boolean saveCryptocurrency(CryptocurrencyDto cryptocurrencyDto) {
         String response = invokeApi(cryptocurrencyDto.getName());
+        if (response == null) {
+            logger.error("Error al obtener la info de la criptomoneda");
+
+            return false;
+        }
         try {
             JsonNode jsonNode = parseJsonResponse(response);
             CryptocurrencyDto cryptocurrencyDto1 = mapJsonToCryptocurrencyDto(jsonNode);
@@ -55,6 +61,7 @@ public class CryptocurrencyBl {
             e.printStackTrace();
             logger.error("Error al guardar la criptomoneda");
         }
+        return true;
 
 
 
@@ -67,7 +74,7 @@ public class CryptocurrencyBl {
                 throw new CryptocurrencyUpdateException("Criptomoneda no encontrada para la actualización", null);
             }
             cryptocurrency.setCurrentPrice(cryptocurrencyDto.getCurrentPrice());
-            cryptocurrencyRepository.save(cryptocurrency);
+            cryptocurrencyRepository.saveAndFlush(cryptocurrency);
 
         } catch (Exception e) {
             throw new CryptocurrencyUpdateException("Error al actualizar el precio de la criptomoneda", e);
@@ -77,7 +84,7 @@ public class CryptocurrencyBl {
 
     public Page<CryptocurrencyDto> getAll(int page, int size) {
         try {
-            Pageable cryptocurrencyPage = PageRequest.of(page, size);
+            Pageable cryptocurrencyPage = PageRequest.of(page, size, Sort.by("id").ascending());
             Page<Cryptocurrency> cryptocurrenciesPage = cryptocurrencyRepository.findAllByStatusTrue(cryptocurrencyPage);
 
             return cryptocurrenciesPage.map(cryptocurrency -> {
@@ -94,9 +101,6 @@ public class CryptocurrencyBl {
     }
 
 
-
-
-
     public String invokeApi(String id) {
         RestTemplate restTemplate = new RestTemplate();
         return restTemplate.getForObject(API_URL + "/" + id, String.class);
@@ -110,7 +114,6 @@ public class CryptocurrencyBl {
     private CryptocurrencyDto mapJsonToCryptocurrencyDto(JsonNode jsonNode) {
         CryptocurrencyDto cryptocurrencyDto = new CryptocurrencyDto();
         JsonNode dataNode = jsonNode.path("data");
-
         cryptocurrencyDto.setName(dataNode.get("name").asText());
         cryptocurrencyDto.setSymbol(dataNode.get("symbol").asText());
         cryptocurrencyDto.setCurrentPrice(dataNode.get("priceUsd").asDouble());

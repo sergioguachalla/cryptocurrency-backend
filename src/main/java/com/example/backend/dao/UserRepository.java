@@ -9,10 +9,16 @@ import java.util.List;
 
 public interface UserRepository extends JpaRepository<User,Long> {
 
-    @Query("SELECT u FROM User u WHERE u.status = true")
-    public List<User> findAllActiveUsers();
+//    @Query("SELECT u FROM User u WHERE u.status = true")
+//    public List<User> findAllActiveUsers();
 
 
     @Query("SELECT u FROM User u WHERE u.id = :id")
     public User findByUserId(@Param("id") long id);
+
+    @Query("SELECT u FROM User u WHERE u.username = :username")
+    User findByUsername(@Param("username") String username);
+
+    @Query("SELECT u FROM User u WHERE u.keyCloakId = :keyCloakId")
+    User findByKeyCloakId(@Param("keyCloakId") String keyCloakId);
 }

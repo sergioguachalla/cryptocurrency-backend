@@ -25,7 +25,13 @@ public class CryptoApi {
     @PostMapping("api/v1/cryptocurrency")
     public ResponseDto<String> saveCrypto(@RequestBody CryptocurrencyDto cryptocurrencyDto){
         ResponseDto response = new ResponseDto();
-        this.cryptocurrencyBl.saveCryptocurrency(cryptocurrencyDto);
+        if(!this.cryptocurrencyBl.saveCryptocurrency(cryptocurrencyDto)){
+            response.setErrorMessage("Error al guardar la criptomoneda");
+            response.setResponse(null);
+            response.setCode("0001");
+            return response;
+        }
+
         response.setErrorMessage(null);
         response.setResponse("Cryptocurrency saved");
         response.setCode("0000");

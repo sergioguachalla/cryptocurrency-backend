@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
-@Table(name = "newuser")
+@Table(name = "users")
 public class User {
 
     @Id
@@ -16,24 +16,21 @@ public class User {
     @Column(name = "username")
     private String username;
 
-    @Column(name = "email")
-    private String email;
+    @Column(name = "keycloak_id")
+    private String keyCloakId;
 
-    @Column(name = "balance")
-    private BigDecimal balance;
+    @Column(name = "name")
+    private String name;
 
-    @Column(name = "status")
-    private boolean status;
 
     public User() {
 
     }
-    public User(Long id, String username, String email, BigDecimal balance, boolean status) {
+    public User(Long id, String username, String keyCloakId, String name) {
         this.id = id;
         this.username = username;
-        this.email = email;
-        this.balance = balance;
-        this.status = status;
+        this.name  = name;
+        this.keyCloakId = keyCloakId;
     }
 
     public Long getId() {
@@ -52,27 +49,19 @@ public class User {
         this.username = username;
     }
 
-    public String getEmail() {
-        return email;
+    public String getKeyCloakId() {
+        return keyCloakId;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setKeyCloakId(String keyCloakId) {
+        this.keyCloakId = keyCloakId;
     }
 
-    public BigDecimal getBalance() {
-        return balance;
+    public String getName() {
+        return name;
     }
 
-    public void setBalance(BigDecimal balance) {
-        this.balance = balance;
-    }
-
-    public boolean isStatus() {
-        return status;
-    }
-
-    public void setStatus(boolean status) {
-        this.status = status;
+    public void setName(String name) {
+        this.name = name;
     }
 }

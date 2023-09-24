@@ -15,19 +15,11 @@ public class UserApi {
     private UserBl userBl;
 
 
-    @GetMapping("/api/v1/users")
-    public ResponseDto<List<UserDto>> findAllUsers() {
-        ResponseDto<List<UserDto>> response = new ResponseDto<>();
-        response.setResponse(userBl.findAllUsers());
-        response.setCode("0000");
-        response.setErrorMessage(null);
-        return response;
-    }
 
     @PostMapping("/api/v1/user")
     public ResponseDto<String> saveUser(@RequestBody UserDto userDto) {
         ResponseDto<String> response = new ResponseDto<>();
-        userBl.saveUser(userDto);
+        userBl.createUser(userDto);
         response.setResponse("User saved");
         response.setCode("0000");
         response.setErrorMessage(null);
@@ -35,27 +27,27 @@ public class UserApi {
 
     }
 
-    @PutMapping("/api/v1/user/{id}")
-    public ResponseDto<String> deleteUser(@PathVariable Long id ) {
-        ResponseDto<String> response = new ResponseDto<>();
-        userBl.deleteUser(id);
-        response.setResponse("User deleted");
-        response.setCode("0000");
-        response.setErrorMessage(null);
-        return response;
-
-    }
-
-    @PutMapping("/api/v1/user/{id}/balance")
-    public ResponseDto<String> updateBalance(@PathVariable Long id, @RequestBody UserDto userDto) {
-        ResponseDto<String> response = new ResponseDto<>();
-        userBl.updateBalance(id, userDto);
-        response.setResponse("Balance updated");
-        response.setCode("0000");
-        response.setErrorMessage(null);
-        return response;
-
-    }
+//    @PutMapping("/api/v1/user/{id}")
+//    public ResponseDto<String> deleteUser(@PathVariable Long id ) {
+//        ResponseDto<String> response = new ResponseDto<>();
+//        userBl.deleteUser(id);
+//        response.setResponse("User deleted");
+//        response.setCode("0000");
+//        response.setErrorMessage(null);
+//        return response;
+//
+//    }
+//
+//    @PutMapping("/api/v1/user/{id}/balance")
+//    public ResponseDto<String> updateBalance(@PathVariable Long id, @RequestBody UserDto userDto) {
+//        ResponseDto<String> response = new ResponseDto<>();
+//        userBl.updateBalance(id, userDto);
+//        response.setResponse("Balance updated");
+//        response.setCode("0000");
+//        response.setErrorMessage(null);
+//        return response;
+//
+//    }
 
 
 }
