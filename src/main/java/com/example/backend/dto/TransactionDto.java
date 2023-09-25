@@ -6,7 +6,7 @@ import java.util.Date;
 public class TransactionDto {
     private Long id;
     private String userId;
-    private Long cryptocurrencyId;
+    private String cryptoName;
     private Date date;
     private String type;
     private BigDecimal quantity;
@@ -15,10 +15,10 @@ public class TransactionDto {
     public TransactionDto() {
     }
 
-    public TransactionDto(Long id, String userId, Long cryptocurrencyId, Date date, String type, BigDecimal quantity, BigDecimal price) {
+    public TransactionDto(Long id, String userId, String cryptocurrencyId, Date date, String type, BigDecimal quantity, BigDecimal price) {
         this.id = id;
         this.userId = userId;
-        this.cryptocurrencyId = cryptocurrencyId;
+        this.cryptoName = cryptocurrencyId;
         this.date = date;
         this.type = type;
         this.quantity = quantity;
@@ -41,12 +41,12 @@ public class TransactionDto {
         this.userId = keycloakUserId;
     }
 
-    public Long getCryptocurrencyId() {
-        return cryptocurrencyId;
+    public String getCryptoName() {
+        return cryptoName;
     }
 
-    public void setCryptocurrencyId(Long cryptocurrencyId) {
-        this.cryptocurrencyId = cryptocurrencyId;
+    public void setCryptocurrencyId(String cryptocurrencyId) {
+        this.cryptoName = cryptocurrencyId;
     }
 
     public Date getDate() {

@@ -38,6 +38,8 @@ public class GlobalSecurityConfiguration {
                     .requestMatchers("api/v1/cryptocurrency/{id}/price").hasRole("VIEW-CRYPTOS")
                     .requestMatchers("/api/v1/cryptocurrency/{id}").hasRole("VIEW-CRYPTOS")
                     .requestMatchers("/api/v1/transactions").authenticated()
+                    .requestMatchers("api/v1/cryptocurrency/all").authenticated()
+                    .requestMatchers("api/v1/transactions/memento").authenticated()
                     .requestMatchers("api/v1/portfolio").authenticated()
                     .requestMatchers("/api/v1/transactions/{id}/{cryptoId}/").permitAll()
                     .requestMatchers("/api/v1/user").authenticated()

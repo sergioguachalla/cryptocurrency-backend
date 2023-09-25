@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 public class PortfolioDto {
-
+    private Long id;
     private String keycloakUserId;
     private String cryptocurrencyName;
 
@@ -15,12 +15,13 @@ public class PortfolioDto {
     public PortfolioDto() {
     }
 
-    public PortfolioDto(String keycloakUserId, String cryptocurrencyName, String cryptocurrencySymbol, BigDecimal totalAmount, BigDecimal amountInUsd) {
+    public PortfolioDto(Long id , String keycloakUserId, String cryptocurrencyName, String cryptocurrencySymbol, BigDecimal totalAmount, BigDecimal amountInUsd) {
         this.keycloakUserId = keycloakUserId;
         this.cryptocurrencyName = cryptocurrencyName;
         this.cryptocurrencySymbol = cryptocurrencySymbol;
         this.totalAmount = totalAmount;
         this.amountInUsd = amountInUsd;
+        this.id = id;
     }
 
     public String getKeycloakUserId() {
@@ -61,5 +62,13 @@ public class PortfolioDto {
 
     public void setAmountInUsd(BigDecimal amountInUsd) {
         this.amountInUsd = amountInUsd;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

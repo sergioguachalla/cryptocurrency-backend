@@ -3,6 +3,7 @@ package com.example.backend.api;
 
 import com.example.backend.bl.TransactionBl;
 import com.example.backend.dto.*;
+import com.example.backend.entity.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
@@ -37,15 +38,25 @@ public class TransactionApi {
 
     @CrossOrigin(origins = "*")
     @GetMapping("api/v1/portfolio")
-    public ResponseDto<List<PortfolioDto>> getPortfolio(@RequestParam String userId,
+    public ResponseDto<Page<PortfolioDto>> getPortfolio(@RequestParam String userId,
             @RequestParam int page,
             @RequestParam int size) {
-        ResponseDto<List<PortfolioDto>> response = new ResponseDto<>();
-        response.setResponse(this.transactionBl.getPortfolio(userId));
+        ResponseDto<Page<PortfolioDto>> response = new ResponseDto<>();
+        response.setResponse(this.transactionBl.getPortfolio(userId, page, size));
         response.setCode("0000");
         response.setErrorMessage(null);
         return response;
 
+    }
+
+    @PostMapping("api/v1/transactions/memento")
+    public ResponseDto<String> saveMemento(@RequestBody List<TransactionDto> transactions) {
+        ResponseDto<String> response = new ResponseDto<>();
+        this.transactionBl.saveTransactions(transactions);
+        response.setResponse("All transactions saved");
+        response.setCode("0000");
+        response.setErrorMessage(null);
+        return response;
     }
 
 

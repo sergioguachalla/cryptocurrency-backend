@@ -67,4 +67,13 @@ public class CryptoApi {
         response.setCode("0000");
         return response;
     }
+
+    @GetMapping("api/v1/cryptocurrency/all")
+    public ResponseDto<List<CryptocurrencyDto>> getAllCryptocurrencies(){
+        ResponseDto<List<CryptocurrencyDto>> response = new ResponseDto<>();
+        response.setErrorMessage(null);
+        response.setResponse(this.cryptocurrencyBl.getAllCryptocurrencies());
+        response.setCode("0000");
+        return response;
+    }
 }

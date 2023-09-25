@@ -13,6 +13,9 @@ import java.util.List;
 public interface CryptocurrencyRepository extends JpaRepository<Cryptocurrency,Long>, PagingAndSortingRepository<Cryptocurrency,Long> {
     Page<Cryptocurrency> findAllByStatusTrue(Pageable pageable);
 
+    @Query("SELECT c FROM Cryptocurrency c WHERE c.status = true")
+    List<Cryptocurrency> findAllActiveCryptocurrencies();
 
-
+    @Query("SELECT c FROM Cryptocurrency c WHERE c.name = :name and c.status = true")
+    Cryptocurrency findByName(@Param("name") String name);
 }

@@ -130,6 +130,22 @@ public class CryptocurrencyBl {
 
     }
 
+
+    public List<CryptocurrencyDto> getAllCryptocurrencies() {
+        List<Cryptocurrency> cryptocurrencies = cryptocurrencyRepository.findAllActiveCryptocurrencies();
+        List<CryptocurrencyDto> cryptocurrencyDtos = new ArrayList<>();
+        for (Cryptocurrency cryptocurrency : cryptocurrencies) {
+            CryptocurrencyDto cryptocurrencyDto = new CryptocurrencyDto();
+            cryptocurrencyDto.setId(cryptocurrency.getId());
+            cryptocurrencyDto.setName(cryptocurrency.getName());
+            cryptocurrencyDto.setSymbol(cryptocurrency.getSymbol());
+            cryptocurrencyDto.setCurrentPrice(cryptocurrency.getCurrentPrice());
+            cryptocurrencyDtos.add(cryptocurrencyDto);
+        }
+        return cryptocurrencyDtos;
+    }
+
+
 }
 
 

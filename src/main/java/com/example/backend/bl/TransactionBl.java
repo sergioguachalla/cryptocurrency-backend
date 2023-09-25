@@ -38,7 +38,7 @@ public class TransactionBl {
         Pageable pageable = PageRequest.of(page, size, Sort.by("transactionDate").descending());
         Page<Transaction> transactions = transactionRepository.findByUserIdAndCryptocurrencyId(userId, cryptocurrencyId, pageable);
         return transactions.map(transaction -> new TransactionDto(transaction.getId(),
-                transaction.getUser().getKeyCloakId(), transaction.getCryptocurrencyId().getId(),
+                transaction.getUser().getKeyCloakId(), transaction.getCryptocurrencyId().getName(),
                 transaction.getTransactionDate(), transaction.getTransactionType(),
                 transaction.getAmount(), transaction.getPrice()));
 
@@ -47,7 +47,7 @@ public class TransactionBl {
     public void saveTransaction(TransactionDto transactionDto) {
         try {
             User user = userRepository.findByKeyCloakId(transactionDto.getKeycloakUserId());
-            Cryptocurrency cryptocurrency = cryptocurrencyRepository.findById(transactionDto.getCryptocurrencyId()).get();
+            Cryptocurrency cryptocurrency = cryptocurrencyRepository.findByName(transactionDto.getCryptoName());
             Transaction transaction = new Transaction();
             transaction.setUser(user);
             transaction.setCryptocurrencyId(cryptocurrency);
@@ -65,31 +65,32 @@ public class TransactionBl {
 
     }
 
-    public Page<PortfolioDto> findTotalAmountByUserIdAndCryptocurrencyId(String userId, Long cryptocurrencyId, int page, int size) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by("totalAmount").descending());
-        Page<Transaction> transactions = transactionRepository.findTotalAmountByUserIdAndCryptocurrencyId(userId, cryptocurrencyId, pageable);
-        return transactions.map(transaction -> new PortfolioDto(transaction.getUser().getKeyCloakId(),
-                transaction.getCryptocurrencyId().getName(), transaction.getCryptocurrencyId().getSymbol(),
-                transaction.getAmount(), transaction.getPrice()));
 
-    }
-
-    public List<PortfolioDto> getPortfolio(String userId) {
-        List<Object[]> portfolio = transactionRepository.getPortfolio(userId);
-        List<PortfolioDto> portfolioDtoList = new ArrayList<>();
-        for (Object[] objects :
-                portfolio) {
+    public Page<PortfolioDto> getPortfolio(String userId, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Object[]> portfolio = transactionRepository.getPortfolio(userId, pageable);
+        return portfolio.map(objects -> {
             PortfolioDto portfolioDto = new PortfolioDto();
+            portfolioDto.setId((Long) objects[0]);
             Cryptocurrency cryptocurrency = cryptocurrencyRepository.findById((Long) objects[0]).get();
             portfolioDto.setCryptocurrencyName(cryptocurrency.getName());
             portfolioDto.setCryptocurrencySymbol(cryptocurrency.getSymbol());
             portfolioDto.setTotalAmount((BigDecimal) objects[1]);
             portfolioDto.setAmountInUsd((BigDecimal) objects[1]);
-            portfolioDtoList.add(portfolioDto);
+
+            return portfolioDto;
+        });
+
+    }
+
+    public void saveTransactions(List<TransactionDto> transactionDtos){
+        try {
+            for (TransactionDto transactionDto : transactionDtos) {
+                saveTransaction(transactionDto);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage() + "Error saving transaction");
         }
-        return portfolioDtoList;
-
-
     }
 
 
