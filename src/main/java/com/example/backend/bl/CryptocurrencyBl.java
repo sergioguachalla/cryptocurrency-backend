@@ -63,8 +63,15 @@ public class CryptocurrencyBl {
         }
         return true;
 
+    }
 
-
+    public void createCryptocurrency(CryptocurrencyDto cryptocurrencyDto){
+        Cryptocurrency cryptocurrency = new Cryptocurrency();
+        cryptocurrency.setName(cryptocurrencyDto.getName());
+        cryptocurrency.setSymbol(cryptocurrencyDto.getSymbol());
+        cryptocurrency.setCurrentPrice(cryptocurrencyDto.getCurrentPrice());
+        cryptocurrency.setStatus(true);
+        cryptocurrencyRepository.save(cryptocurrency);
     }
 
     public void updateCryptocurrencyCurrentPrice(Long id, CryptocurrencyDto cryptocurrencyDto) {

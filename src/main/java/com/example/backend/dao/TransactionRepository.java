@@ -17,6 +17,6 @@ public interface TransactionRepository extends JpaRepository<Transaction,Long> {
     @Query("SELECT t FROM Transaction t WHERE t.user.id = :userId AND t.cryptocurrencyId.id = :cryptocurrencyId")
     Page<Transaction> findTotalAmountByUserIdAndCryptocurrencyId(@Param("userId") String userId, @Param("cryptocurrencyId") Long cryptocurrencyId, Pageable pageable);
 
-    @Query("SELECT t.cryptocurrencyId.id, SUM(t.amount) FROM Transaction t WHERE t.user.keyCloakId = :userId GROUP BY t.cryptocurrencyId.id")
+    @Query("SELECT t.cryptocurrencyId.id, SUM(t.amount) FROM Transaction t WHERE t.user.keyCloakId = :userId and t.transactionType = 'BUY' GROUP BY t.cryptocurrencyId.id")
     Page<Object[]> getPortfolio(@Param("userId") String userId, Pageable pageable);
 }

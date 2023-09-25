@@ -53,6 +53,8 @@ public class TransactionBl {
             transaction.setCryptocurrencyId(cryptocurrency);
             transaction.setTransactionDate(new Date());
             transaction.setTransactionType(transactionDto.getType());
+                transaction.setAmount(transactionDto.getQuantity());
+
             transaction.setAmount(transactionDto.getQuantity());
             double price = cryptocurrency.getCurrentPrice();
             BigDecimal priceParsed = new BigDecimal(price);
@@ -76,7 +78,9 @@ public class TransactionBl {
             portfolioDto.setCryptocurrencyName(cryptocurrency.getName());
             portfolioDto.setCryptocurrencySymbol(cryptocurrency.getSymbol());
             portfolioDto.setTotalAmount((BigDecimal) objects[1]);
-            portfolioDto.setAmountInUsd((BigDecimal) objects[1]);
+            Double price = cryptocurrency.getCurrentPrice() * ((BigDecimal) objects[1]).doubleValue();
+            BigDecimal priceUsd = new BigDecimal(price);
+            portfolioDto.setAmountInUsd(priceUsd);
 
             return portfolioDto;
         });

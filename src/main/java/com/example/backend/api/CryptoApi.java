@@ -38,6 +38,16 @@ public class CryptoApi {
         return response;
     }
 
+    @PostMapping("api/v1/cryptocurrency/custom")
+    public ResponseDto<String> saveCustomCrypto(@RequestBody CryptocurrencyDto cryptocurrencyDto){
+        ResponseDto response = new ResponseDto();
+        this.cryptocurrencyBl.createCryptocurrency(cryptocurrencyDto);
+        response.setErrorMessage(null);
+        response.setResponse("Cryptocurrency saved");
+        response.setCode("0000");
+        return response;
+    }
+
     @CrossOrigin(origins = "*")
     @GetMapping("api/v1/cryptocurrency")
     public ResponseDto<Page<CryptocurrencyDto>> getAssets(@RequestParam int page, @RequestParam int size, Authentication authentication){
