@@ -16,7 +16,7 @@ spring:
     oauth2:
       resource-server:
         jwt:
-          issuer-uri: http://localhost:8080/realms/arquitectura
+          issuer-uri: ${KEYCLOAK_URL:http://host.docker.internal:8080/realms/arquitectura}
           jwk-set-uri: ${spring.security.oauth2.resource-server.jwt.issuer-uri}/protocol/openid-connect/certs
 
 api:
@@ -26,4 +26,4 @@ api:
 token:
   converter:
     principal-attribute: preferred_username
-    resource-id: frontend
+    resource-id: ${RESOURCE_ID:frontend}
