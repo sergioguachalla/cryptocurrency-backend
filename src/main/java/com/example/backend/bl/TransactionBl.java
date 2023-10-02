@@ -78,7 +78,7 @@ public class TransactionBl {
             portfolioDto.setCryptocurrencyName(cryptocurrency.getName());
             portfolioDto.setCryptocurrencySymbol(cryptocurrency.getSymbol());
             portfolioDto.setTotalAmount((BigDecimal) objects[1]);
-            Double price = cryptocurrency.getCurrentPrice() * ((BigDecimal) objects[1]).doubleValue();
+            double price = cryptocurrency.getCurrentPrice() * ((BigDecimal) objects[1]).doubleValue();
             BigDecimal priceUsd = new BigDecimal(price);
             portfolioDto.setAmountInUsd(priceUsd);
 

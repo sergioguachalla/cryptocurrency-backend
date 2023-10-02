@@ -1,0 +1,15 @@
+version: "3.7"
+
+services:
+  backend:
+    image: backend:0.0.6
+    ports:
+      - "8081:8081"
+    environment:
+      DATABASE_URL: "jdbc:postgresql://192.168.1.200:5432/cryptocurrency"
+      KEYCLOAK_URL: "http://host.docker.internal:8080/realms/arquitectura"
+      RESOURCE_ID: "frontend"
+  frontend:
+    image: frontend:0.0.4
+    ports:
+      - "4200:80"
