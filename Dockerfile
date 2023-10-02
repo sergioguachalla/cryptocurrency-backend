@@ -20,7 +20,7 @@ COPY --from=build ${DEPENDENCY}/BOOT-INF/lib /app/lib
 COPY --from=build ${DEPENDENCY}/META-INF /app/META-INF
 COPY --from=build ${DEPENDENCY}/BOOT-INF/classes /app
 
-ENV DATABASE_URL "jdbc:postgresql://192.168.1.200:5432/cryptocurrency"
+ENV DATABASE_URL "jdbc:postgresql://localhost:5433/cryptocurrency"
 ENV URL ""
 ENV KEYCLOAK_URL "http://host.docker.internal:8080/realms/arquitectura"
 ENV RESOURCE_ID "frontend"

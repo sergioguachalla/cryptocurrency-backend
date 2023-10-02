@@ -3,7 +3,7 @@ server:
 
 spring:
   datasource:
-    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/cryptocurrency}
+    url: ${DATABASE_URL:jdbc:postgresql://localhost:5433/cryptocurrency}
     username: postgres
     password: admin
     driver-class-name: org.postgresql.Driver
